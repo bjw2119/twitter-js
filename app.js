@@ -4,10 +4,11 @@ var app = express();
 app.listen(3000);
 
 app.use(function(req, res, next){
-  console.log("Request received:" + req.header.toString());
-  res.end();
+  console.log(req.method + " " + req.url + " " + res.status);
+  next();
 });
 
-app.get('/', function(req, res, next){
-
+app.use('/special/', function(req, res, next){
+  console.log("special area");
+  next();
 })
