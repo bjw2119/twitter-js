@@ -34,9 +34,10 @@ module.exports = function(io){
   });
 
   router.post('/tweets', function(req,res,next){
-    console.log(req.body);
+    // console.log(req.body);
     tweetBank.add(req.body.name, req.body.text);
-    next();
+    io.sockets.emit('new_tweet', {name: req.body.name, text: req.body.text})
+    // next();
   });
 
   router.use(function(req,res,next){
@@ -46,5 +47,9 @@ module.exports = function(io){
 
     res.render('index', {title: "twitter clone", tweets:tweets, showForm: true});
     });
+
+    io.on('new_tweet',function (tweet) {
+console.log(tweet);
+    })
   return router;
 };
