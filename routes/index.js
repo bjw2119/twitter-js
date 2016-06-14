@@ -12,6 +12,20 @@ router.get('/static/stylesheets/style.css', function (req,res,next) {
 
 });
 
+router.get('/users/:userName', function(req, res, next){
+  var tweets = tweetBank.find({name:req.params.userName});
+  //console.log(req.params.userName +"'s tweets: "+tweets)
+  res.render('index', {title: req.params.userName+"'s tweets", tweets:tweets});
+
+
+});
+
+router.get('/tweets/:id', function(req,res,next){
+  var tweets = tweetBank.find({id:req.params.id})
+  console.log(tweets);
+  res.render('index', {title: "Tweet #"+req.params.id, tweets:tweets})
+});
+
 router.use(function(req,res,next){
   //swig.renderFile('views', obj, function(err,output) {
   //console.log(output);
